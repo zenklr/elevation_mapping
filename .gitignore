@@ -27,3 +27,7 @@
 
 # Sublime
 *.sublime*
+
+\.idea/
+
+elevation_mapping_demos/rviz/elevation_map_visualization\.rviz
