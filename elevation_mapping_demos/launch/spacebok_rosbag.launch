@@ -27,7 +27,6 @@
     <include file="$(find mapping_evaluator)/launch/mapping_evaluator.launch" />
 
     <!-- Launch transformations -->
-    <include file="$(find transform_to_pose)/launch/transform_to_pose.launch" />
-
+    <include file="$(find transform_to_pose)/launch/transform_to_pose_without_vicon.launch" />
 
 </launch>
