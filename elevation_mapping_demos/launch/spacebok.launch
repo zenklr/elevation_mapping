@@ -1,28 +1,32 @@
 <launch>
-  <!-- play rosbag data -->
-  <arg name="play_bag" default="false" />
-  <arg name="use_sim_time" default="true"/>
-  <arg name="bag_file" default="/home/radek/rosbag_data/data3.bag"/>
-  <node name="player" pkg="rosbag" type="play" output="screen" args="-r 1.0 --clock $(arg bag_file)" if="$(arg play_bag)"/>
+    <!-- play rosbag data -->
+    <arg name="play_bag" default="false" />
+    <arg name="use_sim_time" default="true"/>
+    <arg name="bag_file" default="/home/radek/rosbag_data/data3.bag"/>
+    <node name="player" pkg="rosbag" type="play" output="screen" args="-r 1.0 --clock $(arg bag_file)" if="$(arg play_bag)"/>
 
-  <!-- launch transform_to_pose node -->
-  <include file="$(find transform_to_pose)/launch/transform_to_pose.launch" />
+    <!-- Run all needed transformations -->
+    <node pkg="tf" type="static_transform_publisher" name="vicon_to_spacebok" args="0 0 0 0 0 0 /vicon/SpaceBok/SpaceBok spacebok_base_link 10"/>
 
-  <!-- Run all needed transformations -->
-  <node pkg="tf" type="static_transform_publisher" name="vicon_to_IRS" args="0 0 0 0 0 0 /vicon/selfiestick/selfiestick camera_link 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="IRS_to_sensor" args="0 0 0 0 0 0 camera_depth_optical_frame sensor 10"/>
+    <!-- This is measured in CAD -->
+    <!--node pkg="tf" type="static_transform_publisher" name="spacebok_to_IRS" args="0.32270 0 0.01392 0 0.7068 0 spacebok_base_link camera_link 10"/-->
+    
+    <!-- This is corrected data from real system -->
+    <node pkg="tf" type="static_transform_publisher" name="spacebok_to_IRS" args="0.32270 0 0.01392 0 0.88 0 spacebok_base_link camera_link 10"/>
 
-  <!-- Elevation mapping node -->
-  <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+    <node pkg="tf" type="static_transform_publisher" name="IRS_to_sensor" args="0 0 0 0 0 0 camera_depth_optical_frame sensor 10"/>
+
+    <!-- Elevation mapping node -->
+    <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
     <rosparam command="load" file="$(find elevation_mapping_demos)/config/robots/spacebok.yaml" />
     <rosparam command="load" file="$(find elevation_mapping_demos)/config/elevation_maps/spacebok.yaml" />
     <rosparam command="load" file="$(find elevation_mapping)/config/sensor_processors/realsense_d435.yaml" />
-  </node>
+    </node>
 
-  <!-- Launch visualizations for the resulting elevation map -->
-  <include file="$(find elevation_mapping_demos)/launch/visualization.launch" />
+    <!-- Launch visualizations for the resulting elevation map -->
+    <include file="$(find elevation_mapping_demos)/launch/visualization.launch" />
 
-  <!-- Launch RViz with the demo configuration -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find elevation_mapping_demos)/rviz/elevation_map_visualization.rviz" />
+    <!-- Launch RViz with the demo configuration -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find elevation_mapping_demos)/rviz/elevation_map_visualization.rviz" />
 
 </launch>

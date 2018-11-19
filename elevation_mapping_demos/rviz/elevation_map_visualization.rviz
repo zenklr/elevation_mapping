@@ -7,8 +7,10 @@ Panels:
         - /Global Options1
         - /TF1
         - /PointCloud21
+        - /spacebok map1
+        - /IRS1
       Splitter Ratio: 0.663888991
-    Tree Height: 359
+    Tree Height: 747
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -27,7 +29,7 @@ Panels:
     Experimental: true
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: PointCloud2
 Visualization Manager:
   Class: ""
   Displays:
@@ -54,13 +56,71 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        camera_aligned_depth_to_color_frame:
+          Value: true
+        camera_aligned_depth_to_infra1_frame:
+          Value: true
+        camera_aligned_depth_to_infra2_frame:
+          Value: true
+        camera_color_frame:
+          Value: true
+        camera_color_optical_frame:
+          Value: true
+        camera_depth_frame:
+          Value: true
+        camera_depth_optical_frame:
+          Value: true
+        camera_infra1_frame:
+          Value: true
+        camera_infra1_optical_frame:
+          Value: true
+        camera_infra2_frame:
+          Value: true
+        camera_infra2_optical_frame:
+          Value: true
+        camera_link:
+          Value: true
+        sensor:
+          Value: true
+        spacebok_base_link:
+          Value: true
+        spacebok_map:
+          Value: true
+        vicon:
+          Value: true
+        vicon/SpaceBok/SpaceBok:
+          Value: true
       Marker Scale: 0.300000012
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        {}
+        vicon:
+          spacebok_map:
+            {}
+          vicon/SpaceBok/SpaceBok:
+            spacebok_base_link:
+              camera_link:
+                camera_aligned_depth_to_color_frame:
+                  camera_color_optical_frame:
+                    {}
+                camera_aligned_depth_to_infra1_frame:
+                  camera_infra1_optical_frame:
+                    {}
+                camera_aligned_depth_to_infra2_frame:
+                  camera_infra2_optical_frame:
+                    {}
+                camera_color_frame:
+                  {}
+                camera_depth_frame:
+                  camera_depth_optical_frame:
+                    sensor:
+                      {}
+                camera_infra1_frame:
+                  {}
+                camera_infra2_frame:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -69,7 +129,7 @@ Visualization Manager:
       Color: 200; 200; 200
       Color Layer: uncertainty_range
       Color Transformer: GridMapLayer
-      Enabled: false
+      Enabled: true
       Height Layer: elevation
       Height Transformer: GridMapLayer
       History Length: 1
@@ -83,7 +143,7 @@ Visualization Manager:
       Topic: /elevation_mapping/elevation_map
       Unreliable: false
       Use Rainbow: true
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: false
       Autocompute Value Bounds:
@@ -96,7 +156,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: RGB8
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: true
       Max Color: 255; 0; 0
       Max Intensity: 9.99999975e-05
@@ -113,7 +173,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Class: rviz/Marker
       Enabled: false
       Marker Topic: /elevation_map_raw_visualization/map_region
@@ -161,16 +221,16 @@ Visualization Manager:
       Value: true
     - Class: rviz/Axes
       Enabled: true
-      Length: 0.5
+      Length: 0.100000001
       Name: IRS
-      Radius: 0.0500000007
+      Radius: 0.00999999978
       Reference Frame: camera_link
       Value: true
   Enabled: true
   Global Options:
     Background Color: 70; 70; 70
     Default Light: true
-    Fixed Frame: spacebok_map
+    Fixed Frame: vicon
     Frame Rate: 30
   Name: root
   Tools:
@@ -191,25 +251,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 11.6368876
+      Distance: 0.735702395
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.451224029
-        Y: 0.0179186724
-        Z: 3.18049192
+        X: 7.17832947
+        Y: -0.40166229
+        Z: 0.903255165
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.689797103
+      Pitch: 0.179795876
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.25743294
+      Yaw: 5.48560476
     Saved: ~
 Window Geometry:
   Displays:

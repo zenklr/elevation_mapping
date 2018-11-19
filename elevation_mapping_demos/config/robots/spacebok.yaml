@@ -1,7 +1,7 @@
 point_cloud_topic: "/camera/depth_registered/points"
 map_frame_id: "vicon"
-robot_base_frame_id: "camera_link"
-robot_pose_with_covariance_topic: "/selfiestick/pose"
+robot_base_frame_id: "spacebok_base_link"
+robot_pose_with_covariance_topic: "/SpaceBok/pose"
 robot_pose_cache_size: 200
 track_point_frame_id: "spacebok_map"
 track_point_x: 0.0
