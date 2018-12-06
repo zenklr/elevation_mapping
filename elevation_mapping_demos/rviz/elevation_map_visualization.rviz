@@ -4,11 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /TF1
-        - /PointCloud21
-        - /spacebok map1
-        - /IRS1
+        - /traversability1
       Splitter Ratio: 0.663888991
     Tree Height: 747
   - Class: rviz/Selection
@@ -29,7 +25,7 @@ Panels:
     Experimental: true
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -80,6 +76,8 @@ Visualization Manager:
           Value: true
         camera_link:
           Value: true
+        ground:
+          Value: true
         sensor:
           Value: true
         spacebok_base_link:
@@ -98,7 +96,8 @@ Visualization Manager:
       Tree:
         vicon:
           spacebok_map:
-            {}
+            ground:
+              {}
           vicon/SpaceBok/SpaceBok:
             spacebok_base_link:
               camera_link:
@@ -122,27 +121,6 @@ Visualization Manager:
                 camera_infra2_frame:
                   {}
       Update Interval: 0
-      Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: false
-      Class: grid_map_rviz_plugin/GridMap
-      Color: 200; 200; 200
-      Color Layer: uncertainty_range
-      Color Transformer: GridMapLayer
-      Enabled: true
-      Height Layer: elevation
-      Height Transformer: GridMapLayer
-      History Length: 1
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Max Intensity: 0.100000001
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: Elevation Map
-      Show Grid Lines: true
-      Topic: /elevation_mapping/elevation_map
-      Unreliable: false
-      Use Rainbow: true
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: false
@@ -226,6 +204,90 @@ Visualization Manager:
       Radius: 0.00999999978
       Reference Frame: camera_link
       Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: false
+      Class: grid_map_rviz_plugin/GridMap
+      Color: 200; 200; 200
+      Color Layer: uncertainty_range
+      Color Transformer: GridMapLayer
+      Enabled: false
+      Height Layer: elevation
+      Height Transformer: GridMapLayer
+      History Length: 1
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 10
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: elevation
+      Show Grid Lines: true
+      Topic: /elevation_mapping/elevation_map
+      Unreliable: false
+      Use Rainbow: true
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: false
+      Class: grid_map_rviz_plugin/GridMap
+      Color: 200; 200; 200
+      Color Layer: elevation
+      Color Transformer: GridMapLayer
+      Enabled: false
+      Height Layer: elevation
+      Height Transformer: GridMapLayer
+      History Length: 1
+      Invert Rainbow: false
+      Max Color: 255; 0; 0
+      Max Intensity: 10
+      Min Color: 255; 255; 255
+      Min Intensity: 0
+      Name: slope
+      Show Grid Lines: true
+      Topic: /elevation_mapping/elevation_map
+      Unreliable: false
+      Use Rainbow: false
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: false
+      Class: grid_map_rviz_plugin/GridMap
+      Color: 200; 200; 200
+      Color Layer: curvature
+      Color Transformer: GridMapLayer
+      Enabled: false
+      Height Layer: elevation
+      Height Transformer: GridMapLayer
+      History Length: 1
+      Invert Rainbow: false
+      Max Color: 0; 98; 255
+      Max Intensity: 500
+      Min Color: 255; 247; 0
+      Min Intensity: -500
+      Name: curvature
+      Show Grid Lines: true
+      Topic: /elevation_mapping/elevation_map
+      Unreliable: false
+      Use Rainbow: false
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: false
+      Class: grid_map_rviz_plugin/GridMap
+      Color: 200; 200; 200
+      Color Layer: traversability
+      Color Transformer: GridMapLayer
+      Enabled: true
+      Height Layer: elevation
+      Height Transformer: GridMapLayer
+      History Length: 1
+      Invert Rainbow: false
+      Max Color: 255; 0; 0
+      Max Intensity: 1
+      Min Color: 255; 255; 255
+      Min Intensity: 0
+      Name: traversability
+      Show Grid Lines: true
+      Topic: /elevation_mapping/elevation_map
+      Unreliable: false
+      Use Rainbow: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 70; 70; 70
@@ -251,25 +313,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.735702395
+      Distance: 3.52496409
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 7.17832947
-        Y: -0.40166229
-        Z: 0.903255165
+        X: 4.54951429
+        Y: 2.54395556
+        Z: -0.187188894
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.179795876
+      Pitch: 0.574795485
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.48560476
+      Yaw: 0.435598582
     Saved: ~
 Window Geometry:
   Displays:

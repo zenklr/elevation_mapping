@@ -306,6 +306,12 @@ class ElevationMap
   bool enableVisibilityCleanup_;
   double visibilityCleanupDuration_;
   double scanningDuration_;
+  double minSlope_;
+  double maxSlope_;
+  double minCurvature_;
+  double maxCurvature_;
+  double w_s;
+  double w_c;
 };
 
 } /* namespace */

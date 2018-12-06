@@ -7,3 +7,9 @@ min_variance: 0.000009
 max_variance: 10000.0
 mahalanobis_distance_threshold: 2.5
 multi_height_noise: 0.0000009
+min_slope: 0
+max_slope: 1
+min_curvature: -20
+max_curvature: 20
+weight_curvature: 1
+weight_slope: 1

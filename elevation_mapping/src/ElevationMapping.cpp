@@ -183,7 +183,14 @@ bool ElevationMapping::readParameters()
   nodeHandle_.param("enable_visibility_cleanup", map_.enableVisibilityCleanup_, true);
   nodeHandle_.param("scanning_duration", map_.scanningDuration_, 1.0);
 
-  // SensorProcessor parameters.
+  nodeHandle_.param("min_slope", map_.minSlope_, 0.0);
+  nodeHandle_.param("max_slope", map_.maxSlope_, 1.0);
+  nodeHandle_.param("min_curvature", map_.minCurvature_, -20.0);
+  nodeHandle_.param("max_curvature", map_.maxCurvature_, 20.0);
+  nodeHandle_.param("weight_slope", map_.w_s, 1.0);
+  nodeHandle_.param("weight_curvature", map_.w_c, 1.0);
+
+    // SensorProcessor parameters.
   string sensorType;
   nodeHandle_.param("sensor_processor/type", sensorType, string("structured_light"));
   if (sensorType == "structured_light") {

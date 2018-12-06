@@ -32,7 +32,7 @@ namespace elevation_mapping {
 ElevationMap::ElevationMap(ros::NodeHandle nodeHandle)
     : nodeHandle_(nodeHandle),
       rawMap_({"elevation", "variance", "horizontal_variance_x", "horizontal_variance_y", "horizontal_variance_xy", "color", "time", "lowest_scan_point", "sensor_x_at_lowest_scan", "sensor_y_at_lowest_scan", "sensor_z_at_lowest_scan"}),
-      fusedMap_({"elevation", "upper_bound", "lower_bound", "color"}),
+      fusedMap_({"elevation", "upper_bound", "lower_bound", "color", "curvature", "slope", "traversability"}),
       hasUnderlyingMap_(false),
       visibilityCleanupDuration_(0.0)
 {
@@ -360,6 +360,49 @@ bool ElevationMap::fuse(const grid_map::Index& topLeftIndex, const grid_map::Ind
     fusedMap_.at("upper_bound", *areaIterator) = upperBoundDistribution.quantile(0.99); // TODO
     // TODO Add fusion of colors.
     fusedMap_.at("color", *areaIterator) = rawMapCopy.at("color", *areaIterator);
+
+    //TODO reduce these layers to cost map and benchmark performance
+    //TODO try downsampling relevant information to improve performance
+    //! Add curvature and slope to fused map
+    Position position;
+    fusedMap_.getPosition(*areaIterator, position);
+
+    float grid_size = rawMapCopy.getResolution();
+    // Check if all sampled points are inside the map
+    if (rawMapCopy.isInside(Eigen::Vector2d(position[0] - grid_size, position[1]))
+                && rawMapCopy.isInside(Eigen::Vector2d(position[0] + grid_size, position[1]))
+                && rawMapCopy.isInside(Eigen::Vector2d(position[0], position[1] - grid_size))
+                && rawMapCopy.isInside(Eigen::Vector2d(position[0], position[1] + grid_size)) )
+    {
+        // Check if neighbouring positions are valid, otherwise leave empty
+        float curvature = (rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0] - grid_size, position[1]))
+                           + rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0] + grid_size, position[1]))
+                           + rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0], position[1] - grid_size))
+                           + rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0], position[1] + grid_size))
+                           - 4 * rawMapCopy.atPosition("elevation", position)) / (grid_size * grid_size);
+
+        float slope = sqrt(pow(rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0] - grid_size, position[1]))
+                           - rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0] + grid_size, position[1])),2)
+                           + pow(rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0] - grid_size, position[1]))
+                           - rawMapCopy.atPosition("elevation", Eigen::Vector2d(position[0] + grid_size, position[1])),2))
+                           / (2*grid_size);
+
+        float traversability;
+        if(slope > maxSlope_ || slope < minSlope_ || curvature > maxCurvature_ || curvature < minCurvature_)
+            traversability = 0;
+        else {
+            // Normalize
+            traversability = 1 - (w_s*slope/maxSlope_  + w_c * curvature/maxCurvature_)/2;
+        }
+
+        if (std::isfinite(curvature))
+            fusedMap_.at("curvature", *areaIterator) = curvature;
+        if (std::isfinite(slope))
+            fusedMap_.at("slope", *areaIterator) = slope;
+        if (std::isfinite(traversability))
+            fusedMap_.at("traversability", *areaIterator) = slope;
+    }
+
   }
 
   fusedMap_.setTimestamp(rawMapCopy.getTimestamp());
